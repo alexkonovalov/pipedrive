@@ -1,3 +1,4 @@
+
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
@@ -11,7 +12,9 @@ import Layout from "./components/Layout";
 import { createStore, applyMiddleware } from "redux";
 
 const logger = (store) => (next) => (action) => {
-  console.log("actionka:", action);
+  console.log("action passed:", action);
+  console.log("new store:", store);
+  
   next(action);
 }
 
@@ -25,7 +28,7 @@ const error = (store) => (next) => (action) => {
 
 const middleware = applyMiddleware(thunk, logger, error);
 
-const store = createStore(reducer, {cards: []}, middleware);
+const store = createStore(reducer, {cards: [], isModalOpen: false }, middleware);
 Window.store = store;
 
 store.subscribe(() => {
@@ -37,10 +40,24 @@ function reducer(state = {cards: []}, action) {
     case ("add") : {
       return {...state, cards: [...state.cards, action.payload]};
     }
+    case ("openModal") : {
+      return {...state, selectedUserData: {
+        name: action.payload.name,
+        company: action.payload.company 
+      },
+      isModalOpen: true
+    };
+    }
+    case ("closeModal") : {
+      return {...state,
+       isModalOpen: false
+      };
+    }
     case ("error") : {
       throw new Error();
       return state;
     }
+    default: return state;
   }
 }
 

@@ -24,3 +24,16 @@ export function fetchPersons() {
         console.log("persons rejected", err);
       })
   }
+
+  export function openModal(name, company) {
+    return {
+      type: "openModal",
+      payload: { name, company}
+    };
+  }
+
+  export function closeModal(name, company) {
+    return {
+      type: "closeModal"
+    };
+  }
