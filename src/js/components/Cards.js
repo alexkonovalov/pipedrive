@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { openModal, closeModal } from "../actions";
+import { openModal, closeModal, moveCard } from "../actions";
 import { Card, CardImg, CardDeck, CardText, CardBody,
   CardTitle, CardSubtitle, Button, Row, Col } from 'reactstrap';
 import {  Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
@@ -22,6 +22,10 @@ export default class Cards extends React.Component {
     }); */
   }
 
+  moveCard = (cardKey, newCardKey) => () => {
+    this.props.dispatch(moveCard(cardKey, newCardKey));
+  }
+
   close = () => {
     this.props.dispatch(closeModal());    
   }
@@ -29,16 +33,14 @@ export default class Cards extends React.Component {
   render() {
 
     console.log("CardsComponent.props", this.props);
-    var list = [
-        <div>
-          {[...(this.props.cards || [])
+    var list = [...(this.props.cards || [])
             .map(card => 
-              <CardDeck class="mt-2" >
-              <Card>
+              <CardDeck class="mt-2" key={card.key}>
+              <Card key={card.key}>
                 <CardBody>
                   <Row>
                     <Col xs="8">
-                      <CardTitle>{card.name}</CardTitle>
+                      <CardTitle>{card.name}[{card.key}]</CardTitle>
                       <CardSubtitle>{card.company} <Button color="danger" onClick={this.toggle(card.name, card.company)}>open</Button></CardSubtitle>
                     </Col>
                     <Col xs="4">
@@ -49,16 +51,13 @@ export default class Cards extends React.Component {
               </Card>
             </CardDeck >
             )
-          ]
-          }
-        </div>
-    ];
+          ];
   
     const ava = "abla";
     return (
       <footer> Foo Barski!! {ava} {this.name}
         { JSON.stringify(this.props.modalContent) }
-        
+        <div><Button color="primary">Move Cards</Button></div>
         <Modal isOpen={this.props.modal} toggle={this.close} className={this.props.className}>
           <ModalHeader toggle={this.close}>{ this.props.modalContent && JSON.stringify(this.props.modalContent) }</ModalHeader>
           <ModalBody>

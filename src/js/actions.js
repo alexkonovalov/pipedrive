@@ -37,3 +37,13 @@ export function fetchPersons() {
       type: "closeModal"
     };
   }
+
+  export function moveCard(cardKey, newPositionKey) {
+    return {
+      type: "moveCard",
+      payload: {
+        cardKey,
+        newCardPositionKey
+      }
+    }
+  }

@@ -38,7 +38,7 @@ export default class Layout extends React.Component {
   render() {
     console.log("Layout.props:", this.props);
     return (
-      [<Navbar color="dark" inverse expand="md">
+      [<Navbar color="dark" inverse expand="md" key="1">{/* remove keys */}
           <NavbarBrand href="/" className="mr-auto">pipedrive</NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar.bind(this)} className="mr-2" />
           <Collapse isOpen={!this.state.collapsed} navbar>
@@ -50,7 +50,7 @@ export default class Layout extends React.Component {
           </Collapse>
       </Navbar>,
 
-      <div class="container-fluid">
+      <div class="container-fluid" key="2">{/* remove keys */}
         <div>
           <Header changeTitle={this.changeTitle.bind(this)} title={this.state.title} />
           <Cards />

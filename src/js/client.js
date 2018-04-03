@@ -40,6 +40,9 @@ function reducer(state = {cards: []}, action) {
     case ("add") : {
       return {...state, cards: [...state.cards, action.payload]};
     }
+    case ("ad") : {
+      return {...state, cards: [...state.cards, action.payload]};
+    }
     case ("openModal") : {
       return {...state, selectedUserData: {
         name: action.payload.name,
@@ -61,21 +64,21 @@ function reducer(state = {cards: []}, action) {
   }
 }
 
-const addCard = (name, company, photo) => {
+const addCard = (name, company, photo, key) => {
   store.dispatch({
     type: "add",
-    payload: { name, company, photo }
+    payload: { name, company, photo, key }
   })
 }
 
-addCard("olga", "pipedrive", "olga.jpg")
-addCard("hendrik", "planet os", "hendrik.jpg")
-addCard("reili", "evolution gaming", "reili.jpg")
-addCard("kaido", "pipedrive", "kaido.jpg")
-addCard("maksim", "betsson", "maksimo.jpg")
+addCard("olga", "pipedrive", "olga.jpg", "olg")
+addCard("hendrik", "planet os", "hendrik.jpg", "hen")
+addCard("reili", "evolution gaming", "reili.jpg", "rei")
+addCard("kaido", "pipedrive", "kaido.jpg", "kai")
+addCard("maksim", "betsson", "maksimo.jpg", "mak")
 
 setTimeout(() => {
-  addCard("ivan", "pipedrive", "ivan.jpg");
+  addCard("ivan", "pipedrive", "ivan.jpg", "iva");
 }, 4000)
 
 const app = document.getElementById('app');
