@@ -26,12 +26,28 @@ export default class Cards extends React.Component {
     this.props.dispatch(closeModal());    
   }
 
+  preventDefault = (event) => event.preventDefault();
+
+  drop = (onDropCardKey) => (event) => {
+    event.preventDefault();
+    var draggedCardKey = event.dataTransfer.getData('key');
+    this.moveCard(draggedCardKey, onDropCardKey)();
+  }
+
+  dragStart = (card) => (event) => {
+    event.dataTransfer.setData('key', card); 
+  }
+
   render() {
 
     var list = [...(this.props.cards || [])
             .map(card => 
-              <CardDeck class="mt-2" key={card.key}>
-              <Card key={card.key}>
+              <CardDeck class="mt-2" key={card.key} 
+                onDragOver={this.preventDefault}
+                onDrop={this.drop(card.key)}
+                >
+              <Card key={card.key} class="draggable-card" draggable="true"
+                onDragStart={this.dragStart(card.key)}>
                 <CardBody>
                   <Row>
                     <Col xs="8">

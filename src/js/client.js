@@ -6,6 +6,7 @@ import axios from "axios";
 import thunk from "redux-thunk";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './components/cards.scss';
 import Layout from "./components/Layout";
 
 
