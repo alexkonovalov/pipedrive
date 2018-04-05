@@ -43,7 +43,7 @@ export function fetchPersons() {
       type: "moveCard",
       payload: {
         cardKey,
-        newCardPositionKey
+        newPositionKey
       }
     }
   }

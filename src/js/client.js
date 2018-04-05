@@ -40,8 +40,21 @@ function reducer(state = {cards: []}, action) {
     case ("add") : {
       return {...state, cards: [...state.cards, action.payload]};
     }
-    case ("ad") : {
-      return {...state, cards: [...state.cards, action.payload]};
+    case ("moveCard") : {
+        return {...state, 
+          cards: state.cards
+            .reduce((acc, curr) => 
+              curr.key === action.payload.newPositionKey
+                ? [...acc, 
+                    state.cards
+                      .find(card => card.key === action.payload.cardKey) || (() => { throw new Error("no such card")}),
+                  curr
+                ]
+                : curr.key === action.payload.cardKey
+                  ? acc
+                  : [...acc, curr]
+            , [])
+          };
     }
     case ("openModal") : {
       return {...state, selectedUserData: {

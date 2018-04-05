@@ -16,10 +16,6 @@ export default class Cards extends React.Component {
 
   toggle = (card, company)  => () => {
     this.props.dispatch(openModal(card, company));
-
-/*     this.setState({
-      modal: !this.state.modal
-    }); */
   }
 
   moveCard = (cardKey, newCardKey) => () => {
@@ -32,7 +28,6 @@ export default class Cards extends React.Component {
 
   render() {
 
-    console.log("CardsComponent.props", this.props);
     var list = [...(this.props.cards || [])
             .map(card => 
               <CardDeck class="mt-2" key={card.key}>
@@ -57,7 +52,7 @@ export default class Cards extends React.Component {
     return (
       <footer> Foo Barski!! {ava} {this.name}
         { JSON.stringify(this.props.modalContent) }
-        <div><Button color="primary">Move Cards</Button></div>
+        <div><Button color="primary" onClick={this.moveCard("mak", "hen")}>Move Cards</Button></div>
         <Modal isOpen={this.props.modal} toggle={this.close} className={this.props.className}>
           <ModalHeader toggle={this.close}>{ this.props.modalContent && JSON.stringify(this.props.modalContent) }</ModalHeader>
           <ModalBody>
