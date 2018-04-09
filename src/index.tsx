@@ -1,54 +1,52 @@
-
-import React from "react";
-import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import axios from "axios";
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 import thunk from "redux-thunk";
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './components/cards.scss';
 import Layout from "./components/Layout";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./components/cards.scss";
 
 import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
 
-const logger = (store) => (next) => (action) => {
+const logger = (store :any) => (next : any) => (action : any) => {
   console.log("action passed:", action);
   console.log("new store:", store);
-  
-  next(action);
-}
 
-const error = (store) => (next) => (action) => {
+  next(action);
+};
+
+const error = (store : any) => (next : any) => (action :any) => {
   try {
     next(action);
   } catch (e) {
     console.log("error caputerd", e);
   }
-}
+};
 
 const middleware = applyMiddleware(thunk, logger, error);
 
 const store = createStore(reducer, {cards: [], isModalOpen: false }, middleware);
-Window.store = store;
+
+(Window as {[store: string]: any}).store = store;
 
 store.subscribe(() => {
   console.log("store changed", store.getState());
-})
+});
 
-function reducer(state = {cards: []}, action) {
-  switch (action.type){
+function reducer(state :any = {cards: []}, action: any) {
+  switch (action.type) {
     case ("add") : {
       return {...state, cards: [...state.cards, action.payload]};
     }
     case ("moveCard") : {
-        return {...state, 
+        return {...state,
           cards: state.cards
-            .reduce((acc, curr) => 
+            .reduce((acc : any, curr: any) =>
               curr.key === action.payload.newPositionKey
-                ? [...acc, 
+                ? [...acc,
                     state.cards
-                      .find(card => card.key === action.payload.cardKey) || (() => { throw new Error("no such card")}),
+                      .find((card : any) => card.key === action.payload.cardKey) || (() => { throw new Error("no such card")}),
                   curr
                 ]
                 : curr.key === action.payload.cardKey
@@ -60,7 +58,7 @@ function reducer(state = {cards: []}, action) {
     case ("openModal") : {
       return {...state, selectedUserData: {
         name: action.payload.name,
-        company: action.payload.company 
+        company: action.payload.company
       },
       isModalOpen: true
     };
@@ -72,18 +70,17 @@ function reducer(state = {cards: []}, action) {
     }
     case ("error") : {
       throw new Error();
-      return state;
     }
     default: return state;
   }
 }
 
-const addCard = (name, company, photo, key) => {
+const addCard = (name : any, company : any, photo : any, key : any) => {
   store.dispatch({
     type: "add",
     payload: { name, company, photo, key }
-  })
-}
+  });
+};
 
 addCard("olga", "pipedrive", "olga.jpg", "olg")
 addCard("hendrik", "planet os", "hendrik.jpg", "hen")
@@ -93,7 +90,10 @@ addCard("maksim", "betsson", "maksimo.jpg", "mak")
 
 setTimeout(() => {
   addCard("ivan", "pipedrive", "ivan.jpg", "iva");
-}, 4000)
+}, 4000);
 
-const app = document.getElementById('app');
-ReactDOM.render(<Provider store={store}><Layout/></Provider>, app);
+
+ReactDOM.render(
+  <Provider store={store} ><Layout /></Provider>,
+    document.getElementById("example")
+);

@@ -1,8 +1,5 @@
-import React from "react";
+import * as React from "react";
 
-import Footer from "./Footer";
-import Header from "./Header";
-import Cards from "./Cards";
 import { connect } from "react-redux";
 import {
   Collapse,
@@ -15,19 +12,24 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem } from 'reactstrap';
+  DropdownItem } from "reactstrap";
 
-@connect(store => ({store}))
-export default class Layout extends React.Component {
+import * as act from "./../actions";
+import { Cards, SFCCounterConnectedVerbose } from "./Cards";
+
+export default class Layout extends React.Component<Pick<any, never>> {
+
+  state : { title : string, collapsed: boolean };
+
   constructor() {
-    super();
-    this.state = {
+    super({});
+     this.state = {
       title: "Welcome",
       collapsed: true
     };
   }
 
-  changeTitle(title) {
+  changeTitle(title: string) {
     this.setState({title});
   }
 
@@ -36,12 +38,11 @@ export default class Layout extends React.Component {
   }
 
   render() {
-    console.log("Layout.props:", this.props);
     return (
-      [<Navbar color="dark" inverse expand="md" key="1">{/* remove keys */}
+      [<Navbar color="dark" inverse expand="md" key="1">
           <NavbarBrand href="/" className="mr-auto">pipedrive</NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar.bind(this)} className="mr-2" />
-          <Collapse isOpen={!this.state.collapsed} navbar>
+          <Collapse isOpen={false} navbar>
             <Nav navbar>
               <NavItem>
                 <NavLink href="https://github.com/alexkonovalov">Github</NavLink>
@@ -50,12 +51,9 @@ export default class Layout extends React.Component {
           </Collapse>
       </Navbar>,
 
-      <div class="container-fluid" key="2">{/* remove keys */}
-        <div>
-          <Header changeTitle={this.changeTitle.bind(this)} title={this.state.title} />
-          <Cards />
-          <Footer />
-        </div>
+      <div key="2">
+        <SFCCounterConnectedVerbose>
+        </SFCCounterConnectedVerbose>
       </div>]
     );
   }

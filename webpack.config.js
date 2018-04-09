@@ -1,32 +1,25 @@
-var debug = process.env.NODE_ENV !== "production";
-var webpack = require('webpack');
-var path = require('path');
-
 module.exports = {
-  context: path.join(__dirname, "src"),
-  devtool: debug ? "inline-sourcemap" : false,
-  entry: "./js/client.js",
-  module: {
-    loaders: [
-      { test:/\.(s*)css$/, loaders:['style-loader','css-loader', 'sass-loader'] },
-      {
-        test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['react', 'es2015', 'stage-0'],
-          plugins: ['react-html-attrs', 'transform-decorators-legacy', 'transform-class-properties']
-        }
-      }
-    ]
-  },
+  entry: "./src/index.tsx",
   output: {
-    path: __dirname + "/src/",
-    filename: "client.min.js"
+      filename: "bundle.js",
+      path: __dirname + "/dist"
   },
-  plugins: debug ? [] : [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
-  ],
+
+  // Enable sourcemaps for debugging webpack's output.
+  devtool: "source-map",
+
+  resolve: {
+      // Add '.ts' and '.tsx' as resolvable extensions.
+      extensions: [".ts", ".tsx", ".js", ".json"]
+  },
+
+  module: {
+      rules: [
+          // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
+          { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+          { test:/\.(s*)css$/, loaders:['style-loader', 'css-loader', 'sass-loader'] },
+          // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
+          { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+      ]
+  },
 };
