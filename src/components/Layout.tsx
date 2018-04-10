@@ -50,11 +50,9 @@ export default class Layout extends React.Component<Pick<any, never>> {
             </Nav>
           </Collapse>
       </Navbar>,
-
-      <div key="2">
-        <SFCCounterConnectedVerbose>
-        </SFCCounterConnectedVerbose>
-      </div>]
+      <SFCCounterConnectedVerbose>
+      </SFCCounterConnectedVerbose>
+      ]
     );
   }
 }

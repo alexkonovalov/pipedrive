@@ -82,16 +82,16 @@ const addCard = (name : any, company : any, photo : any, key : any) => {
   });
 };
 
-addCard("olga", "pipedrive", "olga.jpg", "olg")
-addCard("hendrik", "planet os", "hendrik.jpg", "hen")
-addCard("reili", "evolution gaming", "reili.jpg", "rei")
-addCard("kaido", "pipedrive", "kaido.jpg", "kai")
-addCard("maksim", "betsson", "maksimo.jpg", "mak")
+addCard("olga", "pipedrive", "https://pipedrive-profile-pics.s3.amazonaws.com/e97fb1487d54067f50c16bf00a56bd59a1cbefab_128.jpg", "olg");
+addCard("hendrik", "planet os", "https://pipedrive-profile-pics.s3.amazonaws.com/e97fb1487d54067f50c16bf00a56bd59a1cbefab_128.jpg", "hen");
+addCard("reili", "evolution gaming",
+"https://pipedrive-profile-pics.s3.amazonaws.com/e97fb1487d54067f50c16bf00a56bd59a1cbefab_128.jpg", "rei");
+addCard("kaido", "pipedrive", "https://pipedrive-profile-pics.s3.amazonaws.com/e97fb1487d54067f50c16bf00a56bd59a1cbefab_128.jpg", "kai");
+addCard("maksim", "betsson", "https://pipedrive-profile-pics.s3.amazonaws.com/e97fb1487d54067f50c16bf00a56bd59a1cbefab_128.jpg", "mak");
 
 setTimeout(() => {
-  addCard("ivan", "pipedrive", "ivan.jpg", "iva");
+  addCard("ivan", "pipedrive", "https://pipedrive-profile-pics.s3.amazonaws.com/e97fb1487d54067f50c16bf00a56bd59a1cbefab_128.jpg", "iva");
 }, 4000);
-
 
 ReactDOM.render(
   <Provider store={store} ><Layout /></Provider>,

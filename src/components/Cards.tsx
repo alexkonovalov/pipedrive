@@ -2,8 +2,8 @@ import * as React from "react";
 import { bindActionCreators } from "redux";
 import { connect  } from "react-redux";
 import { openModal, closeModal, moveCard, fetchPersons } from "../actions";
-import { Card, CardImg, CardDeck, CardText, CardBody,
-  CardTitle, CardSubtitle, Button, Row, Col } from "reactstrap";
+import { Card, CardImg, CardDeck, CardText, CardBody, Jumbotron,
+  CardTitle, CardSubtitle, Button, Row, Col, Container } from "reactstrap";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 const mapStateToProps = (store: any) => {
@@ -67,7 +67,8 @@ export const Cards : React.SFC<any> = (props) => {
                       open</Button></CardSubtitle>
                     </Col>
                     <Col xs="4">
-                      <CardImg top width="100%" src={card.photo} alt="Card image cap" />
+                      <CardImg top width="100%" src={card.photo} alt="Card image cap"
+                      className="rounded-circle" />
                     </Col>
                   </Row>
                 </CardBody></Card>
@@ -77,26 +78,22 @@ export const Cards : React.SFC<any> = (props) => {
 
     const ava = "abla";
     return (
-     <footer> Foo Barski!! {ava}
-        { JSON.stringify(modalContent) }
-        <div>
-            <Button color="primary" onClick={moveCard2("mak", "hen")}>Move Cards</Button>
-        </div>
-        <div>
-           <Button color="primary" onClick={fetchPersons}>Fetch</Button>
-        </div>
+      <div>
+        <Jumbotron className="jumbotron-short">
+          <Container><h3>Bootstrap Tutorial</h3></Container>
+        </Jumbotron>
         <Modal isOpen={ modal } toggle={close} className={className}>
           <ModalHeader toggle={close}>{ modalContent && JSON.stringify(modalContent) }</ModalHeader>
           <ModalBody>
            { modalContent && JSON.stringify(modalContent.company) }
           </ModalBody>
           <ModalFooter>
-            <Button color="primary">Do Something</Button>{" "}
+            <Button color="primary">Do Something</Button>
             <Button color="secondary" onClick={close}>Cancel</Button>
           </ModalFooter>
         </Modal>
-        <div>{ list }</div>
-      </footer>
+        <div className="container">{ list }</div>
+        </div>
     );
 };
 
