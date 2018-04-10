@@ -58,7 +58,8 @@ function reducer(state :any = {cards: []}, action: any) {
     case ("openModal") : {
       return {...state, selectedUserData: {
         name: action.payload.name,
-        company: action.payload.company
+        company: action.payload.company,
+        image: action.payload.image
       },
       isModalOpen: true
     };

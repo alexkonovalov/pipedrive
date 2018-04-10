@@ -27,8 +27,8 @@ export const Cards : React.SFC<any> = (props) => {
 
   const { cards, modalContent, className, modal, openModal, closeModal, moveCard, fetchPersons } = props;
 
-  const toggle = (card: any, company: any)  => () => {
-    openModal(card, company);
+  const toggle = (card: any, company: any, image: any)  => () => {
+    openModal(card, company, image);
   };
 
   const moveCard2 = (cardKey : any, newCardKey : any) => () => {
@@ -63,7 +63,7 @@ export const Cards : React.SFC<any> = (props) => {
                   <Row>
                     <Col xs="8">
                       <CardTitle>{card.name}[{card.key}]</CardTitle>
-                      <CardSubtitle>{card.company} <Button color="danger" onClick={toggle(card.name, card.company)}>
+                      <CardSubtitle>{card.company} <Button color="danger" onClick={toggle(card.name, card.company, card.photo)}>
                       open</Button></CardSubtitle>
                     </Col>
                     <Col xs="4">
@@ -80,16 +80,36 @@ export const Cards : React.SFC<any> = (props) => {
     return (
       <div>
         <Jumbotron className="jumbotron-short">
-          <Container><h3>Bootstrap Tutorial</h3></Container>
+          <Container><h3>Person Information</h3></Container>
         </Jumbotron>
-        <Modal isOpen={ modal } toggle={close} className={className}>
-          <ModalHeader toggle={close}>{ modalContent && JSON.stringify(modalContent) }</ModalHeader>
+        <Modal isOpen={ modal && modalContent } toggle={close} className={className}>
+          <ModalHeader toggle={close}>Person Information</ModalHeader>
           <ModalBody>
-           { modalContent && JSON.stringify(modalContent.company) }
+            <Container>
+              <Row className="d-flex justify-content-center">
+                  <CardImg src={modalContent && modalContent.image} alt="Card image cap"
+                      className="rounded-circle" />
+              </Row>
+              <Row className="d-flex justify-content-center">
+                <h5>{ modalContent && modalContent.name }</h5>
+              </Row>
+              <Row className="d-flex justify-content-center">
+                <span className="text-success">+12313123123</span>
+              </Row>
+              <hr/>
+              <Row><Col xs="4"><h5 className="float-right">Email</h5></Col><Col xs="8"><div>olgsa@gs.com</div></Col></Row>
+              <Row><Col xs="4"><h5 className="float-right">Organisation</h5></Col><Col xs="8">
+              <div>{modalContent && modalContent.company}</div></Col></Row>
+              <Row><Col xs="4"><h5 className="float-right">Assistant</h5></Col><Col xs="8"><div>olgsa@gs.com</div></Col></Row>
+              <Row><Col xs="4"><h5 className="float-right">Groups</h5></Col><Col xs="8"><div>olgsa@gs.com</div></Col></Row>
+              <Row><Col xs="4"><h5 className="float-right">Location</h5></Col><Col xs="8">
+              <div>Gothenberg</div></Col></Row>
+            </Container>
+          {/*  modalContent && JSON.stringify(modalContent)  */}
+           {/*  modalContent && JSON.stringify(modalContent.company)  */}
           </ModalBody>
           <ModalFooter>
-            <Button color="primary">Do Something</Button>
-            <Button color="secondary" onClick={close}>Cancel</Button>
+            <Button color="secondary" onClick={close}>Back</Button>
           </ModalFooter>
         </Modal>
         <div className="container">{ list }</div>

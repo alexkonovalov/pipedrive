@@ -25,10 +25,10 @@ export function fetchPersons() {
       });
   }
 
-  export function openModal(name : any, company: any) {
+  export function openModal(name : any, company: any, image: any) {
     return {
       type: "openModal",
-      payload: { name, company}
+      payload: { name, company, image }
     };
   }
 
