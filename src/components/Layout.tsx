@@ -14,7 +14,7 @@ import {
   DropdownMenu,
   DropdownItem } from "reactstrap";
 
-import * as act from "./../actions";
+import * as act from "./../store/actions";
 import { Cards, SFCCounterConnectedVerbose } from "./Cards";
 
 export default class Layout extends React.Component<Pick<any, never>> {

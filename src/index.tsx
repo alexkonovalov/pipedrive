@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 import thunk from "redux-thunk";
 import Layout from "./components/Layout";
 import { PersonCard } from "./store/model";
-import { addCard2 } from "./actions"
+import { addCard2 } from "./store/actions";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./components/cards.scss";
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { bindActionCreators, ActionCreatorsMapObject } from "redux";
 import { connect  } from "react-redux";
-import { openModal, closeModal, moveCard, fetchPersons } from "../actions";
+import { openModal, closeModal, moveCard, fetchPersons } from "../store/actions";
 import { Card, CardImg, CardDeck, CardText, CardBody, Jumbotron,
   CardTitle, CardSubtitle, Button, Row, Col, Container } from "reactstrap";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
