@@ -2,7 +2,8 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import thunk from "redux-thunk";
 import Layout from "./components/Layout";
-
+import { PersonCard } from "./store/model";
+import { addCard2 } from "./actions"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./components/cards.scss";
 
@@ -77,10 +78,7 @@ function reducer(state :any = {cards: []}, action: any) {
 }
 
 const addCard = (name : any, company : any, photo : any, key : any) => {
-  store.dispatch({
-    type: "add",
-    payload: { name, company, photo, key }
-  });
+  store.dispatch(addCard2({ name, company, photo, key }));
 };
 
 addCard("olga", "pipedrive", "https://pipedrive-profile-pics.s3.amazonaws.com/e97fb1487d54067f50c16bf00a56bd59a1cbefab_128.jpg", "olg");

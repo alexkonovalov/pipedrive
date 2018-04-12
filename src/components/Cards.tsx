@@ -1,5 +1,5 @@
 import * as React from "react";
-import { bindActionCreators } from "redux";
+import { bindActionCreators, ActionCreatorsMapObject } from "redux";
 import { connect  } from "react-redux";
 import { openModal, closeModal, moveCard, fetchPersons } from "../actions";
 import { Card, CardImg, CardDeck, CardText, CardBody, Jumbotron,
@@ -23,16 +23,19 @@ const mapDispatchToProps = (dispatch: any) => {
     }, dispatch);
 };
 
-export const Cards : React.SFC<any> = (props) => {
+interface CardsProps {
+  moveCard: typeof moveCard,
+  openModal: typeof openModal,
+  closeModal: typeof closeModal,
+  fetchPersons: typeof fetchPersons,
+}
+
+export const Cards : React.SFC<any | CardsProps> = (props) => {
 
   const { cards, modalContent, className, modal, openModal, closeModal, moveCard, fetchPersons } = props;
 
   const toggle = (card: any, company: any, image: any)  => () => {
     openModal(card, company, image);
-  };
-
-  const moveCard2 = (cardKey : any, newCardKey : any) => () => {
-    moveCard(cardKey, newCardKey);
   };
 
   const close = () => {
@@ -43,8 +46,9 @@ export const Cards : React.SFC<any> = (props) => {
 
   const drop = (onDropCardKey : any) => (event : any) => {
     event.preventDefault();
+    console.log("onDropCardKey:::::", onDropCardKey);
     var draggedCardKey = event.dataTransfer.getData("key");
-    moveCard(draggedCardKey, onDropCardKey);
+    moveCard({ cardKey: draggedCardKey, newPositionKey: onDropCardKey });
   };
 
   const dragStart = (card: any) => (event: any) => {
