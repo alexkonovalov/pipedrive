@@ -10,6 +10,16 @@ import "./components/cards.scss";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 
+class State {
+  cards: PersonCard[];
+  isModalOpen: false;
+}
+
+export const initalState: State = {
+  cards: [],
+  isModalOpen: false
+};
+
 const logger = (store :any) => (next : any) => (action : any) => {
   console.log("action passed:", action);
   console.log("new store:", store);
@@ -27,13 +37,7 @@ const error = (store : any) => (next : any) => (action :any) => {
 
 const middleware = applyMiddleware(thunk, logger, error);
 
-const store = createStore(reducer, {cards: [], isModalOpen: false }, middleware);
-
-(Window as {[store: string]: any}).store = store;
-
-store.subscribe(() => {
-  console.log("store changed", store.getState());
-});
+const store = createStore<State>(reducer, initalState, middleware);
 
 function reducer(state :any = {cards: []}, action: any) {
   switch (action.type) {
