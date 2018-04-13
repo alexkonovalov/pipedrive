@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_TOKEN = "d04d240a90771762f727215739b19fe5f8dddd5b";
 
-import { Action, ActionWithPayload, action } from "./actions.helpers";
+import { createAction, ActionsUnion } from "./actions.helpers";
 import { PersonCard, ModalData, MoveCardParams } from "./model";
 
 export enum ACTION_KEYS {
@@ -12,10 +12,7 @@ export enum ACTION_KEYS {
   MOVE_CARD = "moveCard"
 }
 
-export const addCard2 = action<typeof ACTION_KEYS.ADD_CARD, PersonCard>(ACTION_KEYS.ADD_CARD)
-
-export function fetchPersons() {
-  return (dispatch: any) =>
+export const fetchPersons = (dispatch: any) =>
     axios.get(`https://api.pipedrive.com/v1/persons?api_token=${API_TOKEN}`)
       .then((response: any) => {
         response
@@ -23,7 +20,7 @@ export function fetchPersons() {
           .data
           .map((personData: any) => {
             dispatch(
-              addCard2({
+              Actions.addCard2({
                 name: personData.name,
                 company: personData.org_name,
                 photo: personData.picture_id && personData.picture_id.pictures["128"],
@@ -34,8 +31,12 @@ export function fetchPersons() {
       .catch((err : any) => {
         console.log("persons rejected", err);
       });
+
+export const Actions = {
+  addCard2 : (personCard: PersonCard) => createAction(ACTION_KEYS.ADD_CARD, personCard),
+  openModal : (modalData: ModalData) => createAction(ACTION_KEYS.OPEN_MODAL, modalData),
+  closeModal : () => createAction(ACTION_KEYS.CLOSE_MODAL),
+  moveCard: (moveCardParams: MoveCardParams) => createAction(ACTION_KEYS.MOVE_CARD, moveCardParams)
 }
 
-export const openModal = action<typeof ACTION_KEYS.OPEN_MODAL, ModalData>(ACTION_KEYS.OPEN_MODAL);
-export const closeModal = action<typeof ACTION_KEYS.CLOSE_MODAL>(ACTION_KEYS.CLOSE_MODAL);
-export const moveCard = action<typeof ACTION_KEYS.MOVE_CARD, MoveCardParams>(ACTION_KEYS.MOVE_CARD)
+export type Actions = ActionsUnion<typeof Actions>;

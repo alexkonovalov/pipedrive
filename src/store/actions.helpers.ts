@@ -6,11 +6,13 @@ export interface ActionWithPayload<T extends string, P> extends Action<T> {
   payload: P
 }
 
-export type ActionFn<T extends string> = () => Action<T>
-export type ActionWithPayloadFn<T extends string, P> = (payload: P) => ActionWithPayload<T, P>
+type FunctionType = (...args: any[]) => any
+type ActionCreatorsMapObject = { [actionCreator: string]: FunctionType }
 
-export function action<T extends string>(type: T): ActionFn<T>
-export function action<T extends string, P>(type: T): ActionWithPayloadFn<T, P>
-export function action(type: string) {
-  return (payload?: any) => (payload ? { type, payload } : { type })
+export type ActionsUnion<A extends ActionCreatorsMapObject> = ReturnType<A[keyof A]>
+
+export function createAction<T extends string>(type: T): Action<T>
+export function createAction<T extends string, P>(type: T, payload: P): ActionWithPayload<T, P>
+export function createAction(type: string, payload?: any) {
+  return payload === undefined ? { type } : { type, payload } 
 }

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { bindActionCreators, ActionCreatorsMapObject } from "redux";
 import { connect  } from "react-redux";
-import { openModal, closeModal, moveCard, fetchPersons } from "../store/actions";
+import { Actions, fetchPersons  } from "../store/actions";
 import { Card, CardImg, CardDeck, CardText, CardBody, Jumbotron,
   CardTitle, CardSubtitle, Button, Row, Col, Container } from "reactstrap";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
@@ -14,20 +14,17 @@ const mapStateToProps = (store: any) => {
     };
 };
 
+var s = Actions.closeModal
+
 const mapDispatchToProps = (dispatch: any) => {
-    return bindActionCreators({
-     openModal,
-     closeModal,
-     moveCard,
-     fetchPersons
-    }, dispatch);
+    return bindActionCreators({...Actions, fetchPersons }, dispatch);
 };
 
 interface CardsProps {
-  moveCard: typeof moveCard,
-  openModal: typeof openModal,
-  closeModal: typeof closeModal,
-  fetchPersons: typeof fetchPersons,
+  moveCard: typeof Actions.moveCard,
+  openModal: typeof Actions.openModal,
+  closeModal: typeof Actions.closeModal,
+  fetchPersons: typeof fetchPersons
 }
 
 export const Cards : React.SFC<any | CardsProps> = (props) => {

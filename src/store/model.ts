@@ -15,3 +15,13 @@ export interface MoveCardParams {
   cardKey: any,
   newPositionKey: any
 }
+
+export class State {
+  cards: PersonCard[];
+  isModalOpen: boolean;
+  selectedUserData?: {
+    name: any,
+    company: any,
+    image: any
+  };
+}
