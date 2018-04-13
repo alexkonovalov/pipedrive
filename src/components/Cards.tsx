@@ -2,19 +2,18 @@ import * as React from "react";
 import { bindActionCreators, ActionCreatorsMapObject } from "redux";
 import { connect  } from "react-redux";
 import { Actions, fetchPersons  } from "../store/actions";
+import { State } from "../store/model";
 import { Card, CardImg, CardDeck, CardText, CardBody, Jumbotron,
   CardTitle, CardSubtitle, Button, Row, Col, Container } from "reactstrap";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-const mapStateToProps = (store: any) => {
+const mapStateToProps = (store: State) => {
     return {
        cards: store.cards,
        modal: store.isModalOpen,
        modalContent: store.selectedUserData
     };
 };
-
-var s = Actions.closeModal
 
 const mapDispatchToProps = (dispatch: any) => {
     return bindActionCreators({...Actions, fetchPersons }, dispatch);
@@ -27,12 +26,16 @@ interface CardsProps {
   fetchPersons: typeof fetchPersons
 }
 
-export const Cards : React.SFC<any | CardsProps> = (props) => {
+export const Cards : React.SFC<ReturnType<typeof mapStateToProps> & CardsProps> = (props) => {
 
-  const { cards, modalContent, className, modal, openModal, closeModal, moveCard, fetchPersons } = props;
+  const { openModal, closeModal, moveCard, fetchPersons, cards, modal, modalContent } = props;
 
-  const toggle = (card: any, company: any, image: any)  => () => {
-    openModal(card, company, image);
+  const toggle = (name: any, company: any, image: any)  => () => {
+    openModal({
+      name,
+      company,
+      image
+    });
   };
 
   const close = () => {
@@ -83,7 +86,7 @@ export const Cards : React.SFC<any | CardsProps> = (props) => {
         <Jumbotron className="jumbotron-short">
           <Container><h3>Person Information</h3></Container>
         </Jumbotron>
-        <Modal isOpen={ modal && modalContent } toggle={close} className={className}>
+        <Modal isOpen={ modal && !!modalContent } toggle={close} className={"foo"}>
           <ModalHeader toggle={close}>Person Information</ModalHeader>
           <ModalBody>
             <Container>
