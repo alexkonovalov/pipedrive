@@ -1,12 +1,12 @@
 import { State } from "./model";
-import { Actions, ACTION_KEYS } from "./actions";
+import { ReduxActions, ACTION_KEYS } from "./actions";
 
 export const initalState: State = {
   cards: [],
   isModalOpen: false
 };
 
-export const reducer = (state: State = initalState, action: Actions ) => {
+export const reducer = (state: State = initalState, action: ReduxActions ) => {
   switch (action.type) {
     case (ACTION_KEYS.ADD_CARD) : {
       return {...state, cards: [...state.cards, action.payload]};
@@ -29,11 +29,7 @@ export const reducer = (state: State = initalState, action: Actions ) => {
     }
     case (ACTION_KEYS.OPEN_MODAL) : {
       return {...state, 
-        selectedUserData: {
-          name: action.payload.name,
-          company: action.payload.company,
-          image: action.payload.image
-        },
+        selectedUserData: action.payload,
         isModalOpen: true
       }
     }

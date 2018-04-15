@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const API_TOKEN = "d04d240a90771762f727215739b19fe5f8dddd5b";
+const API_TOKEN = "7f25987743073b4b01a01f14726aa27aa01d4228";
 
-import { createAction, ActionsUnion } from "./actions.helpers";
-import { PersonCard, ModalData, MoveCardParams } from "./model";
+import { createAction, ActionsUnion, ActionCreatorsUnion } from "./actions.helpers";
+import { PersonCard, MoveCardParams } from "./model";
 
 export enum ACTION_KEYS {
   ADD_CARD = "add",
@@ -12,7 +12,7 @@ export enum ACTION_KEYS {
   MOVE_CARD = "moveCard"
 }
 
-export const fetchPersons = (dispatch: any) =>
+export const fetchPersons = () => (dispatch: any) =>
     axios.get(`https://api.pipedrive.com/v1/persons?api_token=${API_TOKEN}`)
       .then((response: any) => {
         response
@@ -20,11 +20,13 @@ export const fetchPersons = (dispatch: any) =>
           .data
           .map((personData: any) => {
             dispatch(
-              Actions.addCard2({
+              ReduxActions.addCard2({
                 name: personData.name,
                 company: personData.org_name,
                 photo: personData.picture_id && personData.picture_id.pictures["128"],
-                key: (new Date()).toString()
+                key: `${personData.id}`,
+                email: personData.email[0].value,
+                phone: personData.phone[0].value
               }));
           });
       })
@@ -32,11 +34,21 @@ export const fetchPersons = (dispatch: any) =>
         console.log("persons rejected", err);
       });
 
-export const Actions = {
+export const ReduxActions = {
   addCard2 : (personCard: PersonCard) => createAction(ACTION_KEYS.ADD_CARD, personCard),
-  openModal : (modalData: ModalData) => createAction(ACTION_KEYS.OPEN_MODAL, modalData),
+  openModal : (modalData: PersonCard) => createAction(ACTION_KEYS.OPEN_MODAL, modalData),
   closeModal : () => createAction(ACTION_KEYS.CLOSE_MODAL),
-  moveCard: (moveCardParams: MoveCardParams) => createAction(ACTION_KEYS.MOVE_CARD, moveCardParams)
+  moveCard: (moveCardParams: MoveCardParams) => createAction(ACTION_KEYS.MOVE_CARD, moveCardParams),
 }
 
+export const EffectActions = {
+  fetchPersons
+}
+
+export const Actions = {
+  ...ReduxActions, ...EffectActions
+}
+
+export type ReduxActions = ActionsUnion<typeof ReduxActions>;
 export type Actions = ActionsUnion<typeof Actions>;
+export type ActionCreators = ActionCreatorsUnion<typeof Actions>

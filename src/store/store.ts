@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 
 import { PersonCard, State } from "./model";
 import { reducer } from "./reducer";
-import { Actions } from "./actions";
+import { ReduxActions, Actions } from "./actions";
 
 const logger = (store :any) => (next : any) => (action : any) => {
   console.log("action passed:", action);
@@ -24,9 +24,11 @@ const middleware = applyMiddleware(thunk, logger, error);
 
 const store = createStore<State>(reducer, middleware);
 
+store.dispatch(Actions.fetchPersons());
+
 //todo remove adding mock data:
-const addCard = (name : any, company : any, photo : any, key : any) => {
-  store.dispatch(Actions.addCard2({ name, company, photo, key }));
+/* const addCard = (name : any, company : any, photo : any, key : any) => {
+  store.dispatch(ReduxActions.addCard2({ name, company, photo, key }));
 };
 
 addCard("olga", "pipedrive", "https://pipedrive-profile-pics.s3.amazonaws.com/e97fb1487d54067f50c16bf00a56bd59a1cbefab_128.jpg", "olg");
@@ -38,6 +40,6 @@ addCard("maksim", "betsson", "https://pipedrive-profile-pics.s3.amazonaws.com/e9
 
 setTimeout(() => {
   addCard("ivan", "pipedrive", "https://pipedrive-profile-pics.s3.amazonaws.com/e97fb1487d54067f50c16bf00a56bd59a1cbefab_128.jpg", "iva");
-}, 4000);
+}, 4000); */
 
 export default store;

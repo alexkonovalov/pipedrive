@@ -1,41 +1,26 @@
 import * as React from "react";
 import { bindActionCreators, ActionCreatorsMapObject } from "redux";
 import { connect  } from "react-redux";
-import { Actions, fetchPersons  } from "../store/actions";
-import { State } from "../store/model";
+import { Actions, ActionCreators, fetchPersons, EffectActions } from "../store/actions";
+import { State, PersonCard } from "../store/model";
 import { Card, CardImg, CardDeck, CardText, CardBody, Jumbotron,
   CardTitle, CardSubtitle, Button, Row, Col, Container } from "reactstrap";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-const mapStateToProps = (store: State) => {
-    return {
+const mapSubState = (store: State) => ({
        cards: store.cards,
        modal: store.isModalOpen,
        modalContent: store.selectedUserData
-    };
-};
+    });
 
-const mapDispatchToProps = (dispatch: any) => {
-    return bindActionCreators({...Actions, fetchPersons }, dispatch);
-};
+const mapDispatchToProps = (dispatch: any) => bindActionCreators(Actions, dispatch);
 
-interface CardsProps {
-  moveCard: typeof Actions.moveCard,
-  openModal: typeof Actions.openModal,
-  closeModal: typeof Actions.closeModal,
-  fetchPersons: typeof fetchPersons
-}
-
-export const Cards : React.SFC<ReturnType<typeof mapStateToProps> & CardsProps> = (props) => {
+export const Cards : React.SFC<ReturnType<typeof mapSubState> & typeof Actions> = (props) => {
 
   const { openModal, closeModal, moveCard, fetchPersons, cards, modal, modalContent } = props;
-
-  const toggle = (name: any, company: any, image: any)  => () => {
-    openModal({
-      name,
-      company,
-      image
-    });
+  
+  const toggle = (card: PersonCard)  => () => {
+    openModal(card);
   };
 
   const close = () => {
@@ -66,8 +51,8 @@ export const Cards : React.SFC<ReturnType<typeof mapStateToProps> & CardsProps> 
                 <CardBody>
                   <Row>
                     <Col xs="8">
-                      <CardTitle>{card.name}[{card.key}]</CardTitle>
-                      <CardSubtitle>{card.company} <Button color="danger" onClick={toggle(card.name, card.company, card.photo)}>
+                      <CardTitle>{card.name}</CardTitle>
+                      <CardSubtitle>{card.company} <Button color="danger" onClick={toggle(card)}>
                       open</Button></CardSubtitle>
                     </Col>
                     <Col xs="4">
@@ -91,26 +76,24 @@ export const Cards : React.SFC<ReturnType<typeof mapStateToProps> & CardsProps> 
           <ModalBody>
             <Container>
               <Row className="d-flex justify-content-center">
-                  <CardImg src={modalContent && modalContent.image} alt="Card image cap"
+                  <CardImg src={modalContent && modalContent.photo} alt="Card image cap"
                       className="rounded-circle" />
               </Row>
               <Row className="d-flex justify-content-center">
                 <h5>{ modalContent && modalContent.name }</h5>
               </Row>
               <Row className="d-flex justify-content-center">
-                <span className="text-success">+12313123123</span>
+                <span className="text-success">{modalContent && modalContent.phone}</span>
               </Row>
               <hr/>
-              <Row><Col xs="4"><h5 className="float-right">Email</h5></Col><Col xs="8"><div>olgsa@gs.com</div></Col></Row>
+              <Row><Col xs="4"><h5 className="float-right">Email</h5></Col><Col xs="8"><div>{modalContent && modalContent.email}</div></Col></Row>
               <Row><Col xs="4"><h5 className="float-right">Organisation</h5></Col><Col xs="8">
               <div>{modalContent && modalContent.company}</div></Col></Row>
-              <Row><Col xs="4"><h5 className="float-right">Assistant</h5></Col><Col xs="8"><div>olgsa@gs.com</div></Col></Row>
-              <Row><Col xs="4"><h5 className="float-right">Groups</h5></Col><Col xs="8"><div>olgsa@gs.com</div></Col></Row>
+              <Row><Col xs="4"><h5 className="float-right">Assistant</h5></Col><Col xs="8"><div>-</div></Col></Row>
+              <Row><Col xs="4"><h5 className="float-right">Groups</h5></Col><Col xs="8"><div>-</div></Col></Row>
               <Row><Col xs="4"><h5 className="float-right">Location</h5></Col><Col xs="8">
-              <div>Gothenberg</div></Col></Row>
+              <div>-</div></Col></Row>
             </Container>
-          {/*  modalContent && JSON.stringify(modalContent)  */}
-           {/*  modalContent && JSON.stringify(modalContent.company)  */}
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={close}>Back</Button>
@@ -122,4 +105,4 @@ export const Cards : React.SFC<ReturnType<typeof mapStateToProps> & CardsProps> 
 };
 
 export const SFCCounterConnectedVerbose =
-connect(mapStateToProps, mapDispatchToProps)(Cards);
+connect(mapSubState, mapDispatchToProps)(Cards);
