@@ -15,7 +15,7 @@ import {
   DropdownItem } from "reactstrap";
 
 import * as act from "./../store/actions";
-import { Cards, SFCCounterConnectedVerbose } from "./Cards";
+import { CardsContainer } from "./Cards";
 
 export default class Layout extends React.Component<Pick<any, never>> {
 
@@ -50,8 +50,8 @@ export default class Layout extends React.Component<Pick<any, never>> {
             </Nav>
           </Collapse>
       </Navbar>,
-      <SFCCounterConnectedVerbose>
-      </SFCCounterConnectedVerbose>
+      <CardsContainer>
+      </CardsContainer>
       ]
     );
   }

@@ -16,63 +16,49 @@ const mapSubState = (store: State) => ({
 
 const mapDispatchToProps = (dispatch: any) => bindActionCreators(Actions, dispatch);
 
-export const Cards : React.SFC<ReturnType<typeof mapSubState> & typeof Actions> = (props) => {
-
+const CardsComponent : React.SFC<ReturnType<typeof mapSubState> & typeof Actions> = (props) => {
   const { openModal, closeModal, moveCard, fetchPersons, cards, modal, modalContent } = props;
-  
-  const toggle = (card: PersonCard)  => () => {
-    openModal(card);
+
+  const cardClicked = (cardKey: string) => {
+    const card = cards
+      .filter(card => card.key === cardKey)[0];
+
+    card ? openModal(card) : () => { throw new Error("Card Is Not Found") };
   };
 
   const close = () => {
     closeModal();
   };
 
-  const preventDefault = (event: any) => event.preventDefault();
-
-  const drop = (onDropCardKey : any) => (event : any) => {
-    event.preventDefault();
-    console.log("onDropCardKey:::::", onDropCardKey);
+  const cardDropped = (onDropCardKey : string, event : any) => {
     var draggedCardKey = event.dataTransfer.getData("key");
     moveCard({ cardKey: draggedCardKey, newPositionKey: onDropCardKey });
   };
 
-  const dragStart = (card: any) => (event: any) => {
-    event.dataTransfer.setData("key", card);
+  const cardDragged = (key: string, event: any) => {
+    event.dataTransfer.setData("key", key);
   };
 
     var list = [...(cards || [])
             .map((card: any) =>
-              <CardDeck className="mt-2" key={card.key}
-                onDragOver={preventDefault}
-                onDrop={drop(card.key)}
-                >
-              <Card key={card.key} className="draggable-card" draggable={true}
-                onDragStart={dragStart(card.key)}>
-                <CardBody>
-                  <Row>
-                    <Col xs="8">
-                      <CardTitle>{card.name}</CardTitle>
-                      <CardSubtitle>{card.company} <Button color="danger" onClick={toggle(card)}>
-                      open</Button></CardSubtitle>
-                    </Col>
-                    <Col xs="4">
-                      <CardImg top width="100%" src={card.photo} alt="Card image cap"
-                      className="rounded-circle" />
-                    </Col>
-                  </Row>
-                </CardBody></Card>
-            </CardDeck>
+                <CardComponent
+                    key={card.key}
+                    personKey={card.key}
+                    name={card.name}
+                    company={card.company}
+                    photo={card.photo}
+                    onDrag={cardDragged}
+                    onDrop={cardDropped}
+                    onClick={cardClicked}
+                />
             )
           ];
 
-    const ava = "abla";
     return (
       <div>
         <Jumbotron className="jumbotron-short">
           <Container><h3>Person Information</h3></Container>
         </Jumbotron>
-        <CardComponent key={"vasily"} name={"vas"} company={"sfsdf"} photo={"sdfsdf"}/>
         <Modal isOpen={ modal && !!modalContent } toggle={close} className={"foo"}>
           <ModalHeader toggle={close}>Person Information</ModalHeader>
           <ModalBody>
@@ -106,5 +92,4 @@ export const Cards : React.SFC<ReturnType<typeof mapSubState> & typeof Actions> 
     );
 };
 
-export const SFCCounterConnectedVerbose =
-connect(mapSubState, mapDispatchToProps)(Cards);
+export const CardsContainer = connect(mapSubState, mapDispatchToProps)(CardsComponent);
