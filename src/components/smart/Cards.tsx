@@ -1,12 +1,14 @@
 import * as React from "react";
 import { bindActionCreators, ActionCreatorsMapObject } from "redux";
 import { connect  } from "react-redux";
-import { Actions, ActionCreators, fetchPersons, EffectActions } from "../store/actions";
-import { State, PersonCard } from "../store/model";
+import { Actions, ActionCreators, fetchPersons, EffectActions } from "../../store/actions";
+import { State, PersonCard } from "../../store/model";
 import { Card, CardImg, CardDeck, CardText, CardBody, Jumbotron,
   CardTitle, CardSubtitle, Button, Row, Col, Container } from "reactstrap";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { PersonCard as CardComponent } from "./Card";
+import { PersonCard as CardComponent } from "../dumb/Card";
+
+import "./cards.scss";
 
 const mapSubState = (store: State) => ({
        cards: store.cards,

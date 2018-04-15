@@ -15,7 +15,7 @@ import {
   DropdownItem } from "reactstrap";
 
 import * as act from "./../store/actions";
-import { CardsContainer } from "./Cards";
+import { CardsContainer } from "./smart/Cards";
 
 export default class Layout extends React.Component<Pick<any, never>> {
 
