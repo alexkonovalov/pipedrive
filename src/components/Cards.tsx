@@ -6,6 +6,7 @@ import { State, PersonCard } from "../store/model";
 import { Card, CardImg, CardDeck, CardText, CardBody, Jumbotron,
   CardTitle, CardSubtitle, Button, Row, Col, Container } from "reactstrap";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { PersonCard as CardComponent } from "./Card";
 
 const mapSubState = (store: State) => ({
        cards: store.cards,
@@ -71,6 +72,7 @@ export const Cards : React.SFC<ReturnType<typeof mapSubState> & typeof Actions> 
         <Jumbotron className="jumbotron-short">
           <Container><h3>Person Information</h3></Container>
         </Jumbotron>
+        <CardComponent key={"vasily"} name={"vas"} company={"sfsdf"} photo={"sdfsdf"}/>
         <Modal isOpen={ modal && !!modalContent } toggle={close} className={"foo"}>
           <ModalHeader toggle={close}>Person Information</ModalHeader>
           <ModalBody>
