@@ -7,12 +7,14 @@ export class PersonCard {
   phone: string;
 }
 
-/* export interface ModalData { 
+export interface ModalData { 
   name: any,
   company: any,
   image: any,
+  email: string,
+  photo: string
 }
- */
+ 
 export interface MoveCardParams {
   cardKey: any,
   newPositionKey: any
