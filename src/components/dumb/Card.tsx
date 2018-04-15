@@ -24,6 +24,8 @@ interface CardEvents {
   onClick?: (key: string) => void
 }
 
+import "./Card.scss";
+
 export const PersonCard : React.SFC<CardProps & CardEvents> = (props) => { 
 
   const preventDefaultIfNeeded = (event: any) => props.onDrag ? event.preventDefault() : event;

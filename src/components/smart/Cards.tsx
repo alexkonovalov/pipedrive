@@ -2,14 +2,12 @@ import * as React from "react";
 import { bindActionCreators, ActionCreatorsMapObject } from "redux";
 import { connect  } from "react-redux";
 import { Actions, ActionCreators, fetchPersons, EffectActions } from "../../store/actions";
-import { State, PersonCard } from "../../store/model";
-import { Card, CardImg, CardDeck, CardText, CardBody, Jumbotron,
-  CardTitle, CardSubtitle, Button, Row, Col, Container } from "reactstrap";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { State } from "../../store/model";
+import { Jumbotron, Container } from "reactstrap";
 import { PersonCard as CardComponent } from "../dumb/Card";
 import { PersonModal as ModalComponent } from "../dumb/Modal";
 
-import "./cards.scss";
+import "./Cards.scss";
 
 const mapSubState = (store: State) => ({
        cards: store.cards,
@@ -38,30 +36,30 @@ const CardsComponent : React.SFC<ReturnType<typeof mapSubState> & typeof Actions
     event.dataTransfer.setData("key", key);
   };
 
-    var list = [...(cards || [])
-            .map((card: any) =>
-                <CardComponent
-                    key={card.key}
-                    personKey={card.key}
-                    name={card.name}
-                    company={card.company}
-                    photo={card.photo}
-                    onDrag={cardDragged}
-                    onDrop={cardDropped}
-                    onClick={cardClicked}
-                />
-            )
-          ];
-
-    return (
-      <div>
-        <Jumbotron className="jumbotron-short">
-          <Container><h3>Person Information</h3></Container>
-        </Jumbotron>
-        <ModalComponent modalContent={modalContent} isOpen={modal} onCloseClick={closeModal}></ModalComponent>
-        <div className="container">{ list }</div>
-        </div>
-    );
+  return (
+    <div>
+      <Jumbotron className="jumbotron-short">
+        <Container><h3>Person Information</h3></Container>
+      </Jumbotron>
+      <ModalComponent modalContent={modalContent} isOpen={modal} onCloseClick={closeModal}></ModalComponent>
+      <div className="container">{
+        [...(cards || [])
+          .map((card: any) =>
+              <CardComponent
+                  key={card.key}
+                  personKey={card.key}
+                  name={card.name}
+                  company={card.company}
+                  photo={card.photo}
+                  onDrag={cardDragged}
+                  onDrop={cardDropped}
+                  onClick={cardClicked}
+              />
+          )
+        ]
+      }</div>
+    </div>
+  );
 };
 
 export const CardsContainer = connect(mapSubState, mapDispatchToProps)(CardsComponent);
