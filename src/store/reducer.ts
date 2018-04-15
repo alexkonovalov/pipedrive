@@ -1,4 +1,4 @@
-import { State } from "../core/model";
+import { State, PersonCard } from "../core/model";
 import { ReduxActions, ACTION_KEYS } from "./actions";
 
 export const initalState: State = {
@@ -14,11 +14,11 @@ export const reducer = (state: State = initalState, action: ReduxActions ) => {
     case (ACTION_KEYS.MOVE_CARD) : {
         return {...state,
           cards: state.cards
-            .reduce((acc : any, curr: any) =>
+            .reduce((acc : PersonCard[], curr: PersonCard) =>
               curr.key === action.payload.newPositionKey
                 ? [...acc,
                     state.cards
-                      .filter((card : any) => card.key === action.payload.cardKey)[0] || (() => { throw new Error("no such card")}),
+                      .filter((card : PersonCard) => card.key === action.payload.cardKey)[0],
                   curr
                 ]
                 : curr.key === action.payload.cardKey

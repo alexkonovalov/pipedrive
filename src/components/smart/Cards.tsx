@@ -1,9 +1,10 @@
 import * as React from "react";
-import { bindActionCreators, ActionCreatorsMapObject } from "redux";
-import { connect  } from "react-redux";
-import { Actions, ActionCreators, EffectActions } from "../../store/actions";
-import { State } from "../../core/model";
 import { Jumbotron, Container } from "reactstrap";
+import { bindActionCreators, ActionCreatorsMapObject, Dispatch } from "redux";
+import { connect  } from "react-redux";
+
+import { Actions, ActionCreators, EffectActions } from "../../store/actions";
+import { State, PersonCard } from "../../core/model";
 import { PersonCard as CardComponent } from "../dumb/Card";
 import { PersonModal as ModalComponent } from "../dumb/Modal";
 
@@ -15,7 +16,7 @@ const mapSubState = (store: State) => ({
        modalContent: store.selectedUserData
     });
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators(Actions, dispatch);
+const mapDispatchToProps = (dispatch: Dispatch<State>) => bindActionCreators(Actions, dispatch);
 
 const CardsComponent : React.SFC<ReturnType<typeof mapSubState> & typeof Actions> = (props) => {
   const { openModal, closeModal, moveCard, fetchPersons, cards, modal, modalContent } = props;
@@ -27,12 +28,12 @@ const CardsComponent : React.SFC<ReturnType<typeof mapSubState> & typeof Actions
     card ? openModal(card) : () => { throw new Error("Card Is Not Found") };
   };
 
-  const cardDropped = (onDropCardKey : string, event : any) => {
+  const cardDropped = (onDropCardKey : string, event : React.DragEvent<HTMLElement>) => {
     var draggedCardKey = event.dataTransfer.getData("key");
     moveCard({ cardKey: draggedCardKey, newPositionKey: onDropCardKey });
   };
 
-  const cardDragged = (key: string, event: any) => {
+  const cardDragged = (key: string, event: React.DragEvent<HTMLElement>) => {
     event.dataTransfer.setData("key", key);
   };
 
@@ -44,7 +45,7 @@ const CardsComponent : React.SFC<ReturnType<typeof mapSubState> & typeof Actions
       <ModalComponent modalContent={modalContent} isOpen={modal} onCloseClick={closeModal}></ModalComponent>
       <div className="container">{
         [...(cards || [])
-          .map((card: any) =>
+          .map((card: PersonCard) =>
               <CardComponent
                   key={card.key}
                   personKey={card.key}

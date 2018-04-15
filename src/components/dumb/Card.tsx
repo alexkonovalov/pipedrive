@@ -8,8 +8,10 @@ import {
   CardSubtitle,
   Button,
   Row,
-  Col
+  Col,
 } from "reactstrap";
+
+import "./Card.scss";
 
 interface CardProps {
   personKey: string,
@@ -19,19 +21,18 @@ interface CardProps {
 } 
 
 interface CardEvents {
-  onDrop?: (key: string, event: any) => void,
-  onDrag?: (key: string, event: any) => void,
+  onDrop?: (key: string, event: React.DragEvent<HTMLElement>) => void,
+  onDrag?: (key: string, event: React.DragEvent<HTMLElement>) => void,
   onClick?: (key: string) => void
 }
 
-import "./Card.scss";
 
 export const PersonCard : React.SFC<CardProps & CardEvents> = (props) => { 
 
-  const preventDefaultIfNeeded = (event: any) => props.onDrag ? event.preventDefault() : event;
+  const preventDefaultIfNeeded = (event: React.DragEvent<HTMLElement>) => props.onDrag ? event.preventDefault() : event;
 
   const drop = (key: string) => { 
-    return (event: any) => {
+    return (event: React.DragEvent<HTMLElement>) => {
       if (props.onDrop) {
         event.preventDefault();
         props.onDrop(key, event);
@@ -40,7 +41,7 @@ export const PersonCard : React.SFC<CardProps & CardEvents> = (props) => {
   };
 
   const drag = (key: string) => { 
-    return (event: any) => {
+    return (event: React.DragEvent<HTMLElement>) => {
       props.onDrag && props.onDrag(key, event)
     }
   };

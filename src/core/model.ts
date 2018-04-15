@@ -8,19 +8,19 @@ export class PersonCard {
 }
 
 export interface ModalData { 
-  name: any,
-  company: any,
-  image: any,
+  name: string,
+  company: string,
+  image: string,
   email: string,
   photo: string
 }
  
 export interface MoveCardParams {
-  cardKey: any,
-  newPositionKey: any
+  cardKey: string,
+  newPositionKey: string
 }
 
-export class State {
+export interface State {
   cards: PersonCard[];
   isModalOpen: boolean;
   selectedUserData?: PersonCard;

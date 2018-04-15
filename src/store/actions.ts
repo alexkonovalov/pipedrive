@@ -1,6 +1,7 @@
+import { Dispatch } from "redux";
 import pipedriveClient from "../core/client";
 import { createAction, ActionsUnion, ActionCreatorsUnion } from "./actions.helpers";
-import { PersonCard, MoveCardParams } from "../core/model";
+import { State, PersonCard, MoveCardParams } from "../core/model";
 
 export enum ACTION_KEYS {
   ADD_CARD = "add",
@@ -17,7 +18,7 @@ export const ReduxActions = {
 }
 
 export const EffectActions = {
-  fetchPersons: () => (dispatch: any) =>
+  fetchPersons: () => (dispatch: Dispatch<State>) =>
       pipedriveClient
         .fetchPersonsCards()
         .then((personCards: PersonCard[]) => {
