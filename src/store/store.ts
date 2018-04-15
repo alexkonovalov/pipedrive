@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 
-import { PersonCard, State } from "./model";
+import { PersonCard, State } from "../core//model";
 import { reducer } from "./reducer";
 import { ReduxActions, Actions } from "./actions";
 

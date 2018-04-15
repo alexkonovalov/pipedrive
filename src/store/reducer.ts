@@ -1,4 +1,4 @@
-import { State } from "./model";
+import { State } from "../core/model";
 import { ReduxActions, ACTION_KEYS } from "./actions";
 
 export const initalState: State = {

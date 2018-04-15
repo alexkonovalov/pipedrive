@@ -11,7 +11,7 @@ import {
   Col
 } from "reactstrap";
 
-import { PersonCard } from "../../store/model" //todo move model out of store
+import { PersonCard } from "../../core/model"
 
 interface ModalProps {
   modalContent: PersonCard,
@@ -53,18 +53,6 @@ export const PersonModal : React.SFC<ModalProps & ModalEvents> = (props) => {
               <Row>
                 <Col xs="4"><h5 className="float-right">Organisation</h5></Col>
                 <Col xs="8"><div>{ props.modalContent.company}</div></Col>
-              </Row>
-              <Row>
-                <Col xs="4"><h5 className="float-right">Assistant</h5></Col>
-                <Col xs="8"><div>-</div></Col>
-              </Row>
-              <Row>
-                <Col xs="4"><h5 className="float-right">Groups</h5></Col>
-                <Col xs="8"><div>-</div></Col>
-              </Row>
-              <Row>
-                <Col xs="4"><h5 className="float-right">Location</h5></Col>
-                <Col xs="8"><div>-</div></Col>
               </Row>
             </Container>
           </ModalBody>

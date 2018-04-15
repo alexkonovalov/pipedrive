@@ -1,8 +1,8 @@
 import * as React from "react";
 import { bindActionCreators, ActionCreatorsMapObject } from "redux";
 import { connect  } from "react-redux";
-import { Actions, ActionCreators, fetchPersons, EffectActions } from "../../store/actions";
-import { State } from "../../store/model";
+import { Actions, ActionCreators, EffectActions } from "../../store/actions";
+import { State } from "../../core/model";
 import { Jumbotron, Container } from "reactstrap";
 import { PersonCard as CardComponent } from "../dumb/Card";
 import { PersonModal as ModalComponent } from "../dumb/Modal";

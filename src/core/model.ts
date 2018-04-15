@@ -25,3 +25,21 @@ export class State {
   isModalOpen: boolean;
   selectedUserData?: PersonCard;
 }
+
+export type PersonInfo = {
+  name: string,
+  company: string,
+  org_name: string,
+  picture_id: {
+    pictures: { [key: string]: string }
+  },
+  id: string,
+  email: { value: string}[],
+  phone: { value: string}[]
+}
+
+export type PersonInfoResponse = {
+  data: {
+    data: PersonInfo[]
+  }
+}
