@@ -12,20 +12,28 @@ export const reducer = (state: State = initalState, action: ReduxActions ) => {
       return {...state, cards: [...state.cards, action.payload]};
     }
     case (ACTION_KEYS.MOVE_CARD) : {
-        return {...state,
-          cards: state.cards
-            .reduce((acc : PersonCard[], curr: PersonCard) =>
-              curr.key === action.payload.newPositionKey
-                ? [...acc,
-                    state.cards
-                      .filter((card : PersonCard) => card.key === action.payload.cardKey)[0],
-                  curr
-                ]
-                : curr.key === action.payload.cardKey
-                  ? acc
-                  : [...acc, curr]
-            , [])
-         };
+      const cardKeys = state.cards
+        .map((card : PersonCard) => card.key);
+        
+      const cardIdx = cardKeys.indexOf(action.payload.cardKey);
+      const newPositionIdx = cardKeys.indexOf(action.payload.newPositionKey);
+
+      return {...state,
+         cards: state.cards
+          .reduce((acc : PersonCard[], curr: PersonCard, idx: number) => {
+            if (cardIdx === idx) {
+              return acc;
+            }
+            if (idx === newPositionIdx) {
+              return newPositionIdx > cardIdx
+                ? [...acc, curr, state.cards[cardIdx]]
+                : [...acc, state.cards[cardIdx], curr]
+            }
+            else {
+              return [...acc, curr];
+            }
+          }, [])
+        };
     }
     case (ACTION_KEYS.OPEN_MODAL) : {
       return {...state, 
