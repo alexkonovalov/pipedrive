@@ -13,6 +13,8 @@ import {
 
 import { PersonCard } from "../../core/model"
 
+import "./personModal.scss";
+
 interface ModalProps {
   modalContent: PersonCard,
   isOpen: boolean
@@ -31,7 +33,7 @@ export const PersonModalComponent : React.SFC<ModalProps & ModalEvents> = (props
   return (
       !props.modalContent
       ? null 
-      : <Modal isOpen={ props.isOpen } toggle={close}>
+      : <Modal className="person-modal modal-lg" isOpen={ props.isOpen } toggle={close}>
           <ModalHeader toggle={close}>Person Information</ModalHeader>
           <ModalBody>
             <Container>

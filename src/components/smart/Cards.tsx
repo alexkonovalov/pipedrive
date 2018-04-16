@@ -8,7 +8,7 @@ import { State, PersonCard } from "../../core/model";
 import { PersonCardComponent } from "../dumb/personCard";
 import { PersonModalComponent } from "../dumb/personModal";
 
-import "./Cards.scss";
+import "./cards.scss";
 
 const mapSubState = (store: State) => ({
        cards: store.cards,

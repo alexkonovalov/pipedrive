@@ -1,4 +1,7 @@
-.jumbotron.jumbotron-short {
-  padding: 1rem 1rem;
-  margin-bottom: 1rem;
+.jumbotron {
+  &.jumbotron-short {
+    padding: 1rem 1rem;
+    margin-bottom: 1rem;
+  }  
 }
+

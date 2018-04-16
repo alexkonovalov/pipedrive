@@ -11,7 +11,7 @@ import {
   Col,
 } from "reactstrap";
 
-import "./Card.scss";
+import "./personCard.scss";
 
 interface CardProps {
   personKey: string,
@@ -50,22 +50,28 @@ export const PersonCardComponent : React.SFC<CardProps & CardEvents> = (props) =
   }
 
   return (
-    <CardDeck className="mt-2" key={props.personKey} onDrop={drop(props.personKey)}>
-      <Card key={props.personKey} className="draggable-card" draggable={true}
+    <CardDeck className="mt-2 person-card" key={props.personKey} onDrop={drop(props.personKey)}>
+      <Card key={props.personKey} draggable={true}
         onDragStart={drag(props.personKey)} onDragOver={preventDefaultIfNeeded}>
         <CardBody>
           <Row>
             <Col xs="8">
-              <CardTitle>{props.name}</CardTitle>
-              <CardSubtitle>{props.company} <Button color="danger" onClick={click(props.personKey)}>
-              open</Button ></CardSubtitle>
+              <CardTitle onClick={click(props.personKey)}>{props.name}</CardTitle>
+              <CardSubtitle >{props.company} </CardSubtitle>
             </Col>
             <Col xs="4">
-              <CardImg top width="100%" src={props.photo} alt="Card image cap"
-              className="rounded-circle" />
+              <CardImg 
+                top
+                width="100%"
+                src={props.photo}
+                alt="Card image cap"
+                className="rounded-circle"
+                onClick={click(props.personKey)}
+              />
             </Col>
           </Row>
-        </CardBody></Card>
+        </CardBody>
+      </Card>
     </CardDeck>
   );
 }
