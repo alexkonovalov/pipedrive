@@ -26,8 +26,7 @@ interface CardEvents {
   onClick?: (key: string) => void
 }
 
-
-export const PersonCard : React.SFC<CardProps & CardEvents> = (props) => { 
+export const PersonCardComponent : React.SFC<CardProps & CardEvents> = (props) => { 
 
   const preventDefaultIfNeeded = (event: React.DragEvent<HTMLElement>) => props.onDrag ? event.preventDefault() : event;
 

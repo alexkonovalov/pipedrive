@@ -5,8 +5,8 @@ import { connect  } from "react-redux";
 
 import { Actions, ActionCreators, EffectActions } from "../../store/actions";
 import { State, PersonCard } from "../../core/model";
-import { PersonCard as CardComponent } from "../dumb/Card";
-import { PersonModal as ModalComponent } from "../dumb/Modal";
+import { PersonCardComponent } from "../dumb/personCard";
+import { PersonModalComponent } from "../dumb/personModal";
 
 import "./Cards.scss";
 
@@ -24,8 +24,7 @@ const CardsComponent : React.SFC<ReturnType<typeof mapSubState> & typeof Actions
   const cardClicked = (cardKey: string) => {
     const card = cards
       .filter(card => card.key === cardKey)[0];
-
-    card ? openModal(card) : () => { throw new Error("Card Is Not Found") };
+    card && openModal(card);
   };
 
   const cardDropped = (onDropCardKey : string, event : React.DragEvent<HTMLElement>) => {
@@ -42,11 +41,11 @@ const CardsComponent : React.SFC<ReturnType<typeof mapSubState> & typeof Actions
       <Jumbotron className="jumbotron-short">
         <Container><h3>Person Information</h3></Container>
       </Jumbotron>
-      <ModalComponent modalContent={modalContent} isOpen={modal} onCloseClick={closeModal}></ModalComponent>
+      <PersonModalComponent modalContent={modalContent} isOpen={modal} onCloseClick={closeModal}></PersonModalComponent>
       <div className="container">{
         [...(cards || [])
           .map((card: PersonCard) =>
-              <CardComponent
+              <PersonCardComponent
                   key={card.key}
                   personKey={card.key}
                   name={card.name}

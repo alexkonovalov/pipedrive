@@ -22,7 +22,7 @@ interface ModalEvents {
   onCloseClick: () => void
 }
 
-export const PersonModal : React.SFC<ModalProps & ModalEvents> = (props) => { 
+export const PersonModalComponent : React.SFC<ModalProps & ModalEvents> = (props) => { 
 
   const close = () => {
     props.onCloseClick();
