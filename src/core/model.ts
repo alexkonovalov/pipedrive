@@ -1,4 +1,4 @@
-export class PersonCard {
+export interface PersonCard {
   name: string;
   company: string;
   photo: string;

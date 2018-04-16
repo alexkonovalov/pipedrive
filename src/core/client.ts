@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { PersonInfoResponse, PersonInfo, PersonCard } from "./model";
 
 const API_TOKEN = "7f25987743073b4b01a01f14726aa27aa01d4228";
@@ -21,6 +22,6 @@ const pipedriveClient = {
           })
         )
     })
-}
+};
 
-export default pipedriveClient;
+export default pipedriveClient

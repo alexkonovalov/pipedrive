@@ -23,15 +23,13 @@ export const reducer = (state: State = initalState, action: ReduxActions ) => {
           .reduce((acc : PersonCard[], curr: PersonCard, idx: number) => {
             if (cardIdx === idx) {
               return acc;
-            }
+            } 
             if (idx === newPositionIdx) {
               return newPositionIdx > cardIdx
                 ? [...acc, curr, state.cards[cardIdx]]
-                : [...acc, state.cards[cardIdx], curr]
+                : [...acc, state.cards[cardIdx], curr];
             }
-            else {
-              return [...acc, curr];
-            }
+            return [...acc, curr];
           }, [])
         };
     }
@@ -48,4 +46,4 @@ export const reducer = (state: State = initalState, action: ReduxActions ) => {
     }
     default: return state;
   }
-}
+};
