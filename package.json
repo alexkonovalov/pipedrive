@@ -30,7 +30,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cp src/index.html dist/index.html && webpack-dev-server --mode development --content-base dist --inline --hot"
+    "dev": "cp src/index.html dist/index.html && webpack-dev-server --mode development --content-base dist --inline --hot",
+    "prod": "cp src/index.html dist/index.html && webpack --content-base dist"
   },
   "author": "",
   "license": "ISC"
